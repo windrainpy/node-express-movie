@@ -116,7 +116,7 @@ exports.loginRequired = (req, res, next) => {
     var user = req.session.user
 
     if(!user) {
-        res.redirect('/login')
+        return res.redirect('/login')
     }
     next()
 }
@@ -126,7 +126,7 @@ exports.adminRequired = (req, res, next) => {
     var user = req.session.user
 
     if(user.role < 10) {
-        res.redirect('/login')
+        return res.redirect('/login')
     }
     next()
 }
