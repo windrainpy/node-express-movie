@@ -1,11 +1,11 @@
 var express = require('express')
 var path = require('path')
 var mongoose = require('mongoose')
-var _ = require('underscore')
 var bodyParser = require('body-parser')
 var session = require('express-session')
 var cookieParser = require('cookie-parser')
 var mongoStore = require('connect-mongo')(session)
+var logger = require('morgan')
 
 var port = process.env.PORT || 9000
 var mongodbUrl = 'mongodb://localhost:27017/movie'
@@ -20,9 +20,16 @@ connect.on('open', () => {
     console.log('Mongodb 连接成功', mongodbUrl)
 })
 
-console.log(111, process.env.NODE_ENV)
+console.log(111, app.get('env'))
 
-app.set('views', './views/pages')
+if(app.get('env') === 'development') {
+    app.set('showStackError', true)
+    app.use(logger(':method :url :status'))
+    app.locals.pretty = true
+    mongoose.set('debug', true)
+}
+
+app.set('views', './app/views/pages')
 app.set('view engine', 'jade')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.urlencoded({extended: true}))

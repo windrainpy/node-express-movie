@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+    .container
+        .col-md-5
+            form(method="post", action="/user/login")
+                .form-group
+                    label(for="loginName") 用户名
+                    input#loginName.form-control(type="text", name="user[name]")
+                .form-group
+                    label(for="loginPassword") 密&emsp;码
+                    input#loginPassword.form-control(type="text", name="user[password]")
+                button.btn.btn-success(type="submit") 提交
