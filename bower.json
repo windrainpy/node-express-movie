@@ -1,0 +1,14 @@
+{
+  "name": "express-movie-scott",
+  "authors": [
+    "panny"
+  ],
+  "description": "",
+  "main": "app.js",
+  "license": "MIT",
+  "homepage": "localhost:9000",
+  "dependencies": {
+    "jquery": "^3.4.0",
+    "bootstrap": "^4.0"
+  }
+}

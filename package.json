@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.18.3",
+    "connect-mongo": "^2.0.3",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "jade": "^1.11.0",
+    "moment": "^2.24.0",
+    "mongoose": "^5.5.1",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {}
+}
