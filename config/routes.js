@@ -25,14 +25,14 @@ module.exports = (app) => {
     app.get('/logout', User.logout)
 
     // 后台管理 - 电影
-    app.get('/admin/movie/new', Movie.new)
-    app.get('/admin/movie/update/:id', Movie.update)
-    app.post('/admin/movie/new', Movie.save)
-    app.delete('/admin/movie/delete', Movie.delete)
-    app.get('/admin/movie/list', Movie.list)
+    app.get('/admin/movie/new', User.loginRequired, User.adminRequired, Movie.new)
+    app.get('/admin/movie/update/:id', User.loginRequired, User.adminRequired, Movie.update)
+    app.post('/admin/movie/new', User.loginRequired, User.adminRequired, Movie.save)
+    app.delete('/admin/movie/delete', User.loginRequired, User.adminRequired, Movie.delete)
+    app.get('/admin/movie/list', User.loginRequired, User.adminRequired, Movie.list)
 
     // 后台管理 - 用户
-    app.get('/admin/user/list', User.list)
-    app.delete('/admin/user/delete', User.delete)
+    app.get('/admin/user/list', User.loginRequired, User.adminRequired, User.list)
+    app.delete('/admin/user/delete', User.loginRequired, User.adminRequired, User.delete)
 
 }

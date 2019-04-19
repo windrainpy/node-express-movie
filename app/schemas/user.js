@@ -8,6 +8,15 @@ var UserSchema = mongoose.Schema({
         unique: true
     },
     password: String,
+    // 0: 普通用户
+    // 1：邮件验证通过的用户
+    // 2：专业的用户
+    // >10：admin
+    // >50：super admin
+    role: {
+        type: Number,
+        default: 0
+    },
     meta: {
         createAt: {
             type: Date,

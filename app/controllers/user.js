@@ -107,7 +107,26 @@ exports.delete = (req, res) => {
     User.remove({_id: id}, (err, data) => {
         if(err) console.log(err)
 
-        console.log(222, data)
         res.json({success: 1})
     })
+}
+
+// 登录验证中间件
+exports.loginRequired = (req, res, next) => {
+    var user = req.session.user
+
+    if(!user) {
+        res.redirect('/login')
+    }
+    next()
+}
+
+// 管理员验证中间件
+exports.adminRequired = (req, res, next) => {
+    var user = req.session.user
+
+    if(user.role < 10) {
+        res.redirect('/login')
+    }
+    next()
 }

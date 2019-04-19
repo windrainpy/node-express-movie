@@ -11,7 +11,7 @@ var port = process.env.PORT || 9000
 var mongodbUrl = 'mongodb://localhost:27017/movie'
 var app = express()
 
-mongoose.connect(mongodbUrl)
+mongoose.connect(mongodbUrl, {useNewUrlParser: true })
 var connect = mongoose.connection
 connect.on('error', (err) => {
     console.log('mongodb连接失败: ', err)
@@ -20,11 +20,9 @@ connect.on('open', () => {
     console.log('Mongodb 连接成功', mongodbUrl)
 })
 
-console.log(111, app.get('env'))
-
 if(app.get('env') === 'development') {
     app.set('showStackError', true)
-    app.use(logger(':method :url :status'))
+    // app.use(logger(':method :url :status')) //在命令行终端打印http请求
     app.locals.pretty = true
     mongoose.set('debug', true)
 }
