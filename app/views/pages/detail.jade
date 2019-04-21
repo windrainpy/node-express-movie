@@ -4,7 +4,47 @@ block content
     .container
         .row
             .col-md-7
-                embed(src="#{movie.flash}", allowFullScreen="true", quality="high", width="600", height="420", align="middle", type="application/x-shockwave-flash")
+                embed.mb-3(src="#{movie.flash}", allowFullScreen="true", quality="high", width="600", height="420", align="middle", type="application/x-shockwave-flash")
+
+                hr
+                //- 评论区
+                if comments
+                    each item in comments
+                        .media.mt-2
+                            img.mr-3(src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+", alt="")
+                            .media-body
+                                .clearfix
+                                    h5.mt-0.float-left #{item.from.name}
+                                    a.btn-reply.float-right(href="", data-toid="#{item.from._id}", data-commentid="#{item._id}") 回复
+                                p #{item.content}
+
+                                if item.reply
+                                    each reply in item.reply
+                                        .media.mt-3
+                                            img.mr-3(src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+", alt="")
+                                            .media-body
+                                                .clearfix
+                                                    h5.mt-0.float-left #{reply.from.name} 回复 #{reply.to.name}
+                                                    a.btn-reply.float-right(href="", data-toid="#{reply.from._id}", data-commentid="#{item._id}") 回复
+                                                p #{reply.content}
+                        hr
+
+                form#comment_form.mb-5.mt-3(action="/user/comment", method="post")
+                    input(type="hidden", name="comment[movie]", value="#{movie._id}")
+                    //- 用js插入以下隐藏文本域
+                    //- input(type="hidden", name="comment[toId]", value="123")
+                    //- input(type="hidden", name="comment[commentId]", value="123")
+                    if user
+                        input(type="hidden", name="comment[from]", value="#{user._id}")
+
+                    .form-group
+                        label(for="commentInput") 评论内容
+                        textarea.form-control#commentInput(name="comment[content]", cols="30", rows="3")
+                    if user
+                        button.btn.btn-primary(type="submit") 提交
+                    else
+                        a(href="/login", data-toggle="modal", data-target="#login_modal") 登录后评论
+
             .col-md-5
                 dl.dl-horizontal
                     dt 电影名字
@@ -19,3 +59,4 @@ block content
                     dd #{movie.language}
                     dt 简介
                     dd #{movie.summary}
+    script(src="/js/comment.js")

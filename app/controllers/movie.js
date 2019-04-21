@@ -3,6 +3,7 @@
  */
 var _ = require('underscore')
 var Movie = require('../models/movie')
+var Comment = require('../models/comment')
 
 /**
  * 详情页
@@ -12,10 +13,20 @@ exports.detail = (req, res) => {
     Movie.findById(id, (err, movie) => {
         if(err) console.error(err)
 
-        res.render('detail', {
-            title: 'Movie Detail',
-            movie: movie
-        })
+        Comment
+            .find({movie: id})
+            .populate('from', 'name')
+            .populate('reply.from', 'name')
+            .populate('reply.to', 'name')
+            .exec((err, comments) => {
+                if(err) console.log(err)
+
+                res.render('detail', {
+                    title: 'Movie Detail',
+                    movie: movie,
+                    comments
+                })
+            })
     })
 }
 

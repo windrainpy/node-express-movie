@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var bcrypt = require('bcrypt')
 var SALT_WORK_FACTOR = 10
 
-var UserSchema = mongoose.Schema({
+var UserSchema = new mongoose.Schema({
     name: {
         type: String,
         unique: true
@@ -50,6 +50,7 @@ UserSchema.pre('save', function(next) {
     })
 })
 
+// 实例方法，每个文档实例都有该方法
 UserSchema.methods = {
     comparePassword: function(_password, cb) {
         bcrypt.compare(_password, this.password, (err, isMatch) => {
@@ -60,6 +61,7 @@ UserSchema.methods = {
     }
 }
 
+// 静态方法
 UserSchema.statics = {
     fetch: function(cb) {
         return this

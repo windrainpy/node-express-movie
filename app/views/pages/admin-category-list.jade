@@ -6,22 +6,14 @@ block content
             table.table.table-hover.table-bordered
                 thead
                     tr
-                        th 电影名字
-                        th 年份
-                        th 导演
-                        th 国家
-                        th 语言
+                        th 分类名
                         th 查看
                         th 更新
                         th 删除
                 tbody
-                    each item in movies
+                    each item in categories
                         tr(class="item-id-#{item._id}")
-                            td #{item.title}
-                            td #{item.year}
-                            td #{item.doctory}
-                            td #{item.country}
-                            td #{item.language}
+                            td #{item.name}
                             td
                                 a(targe="_blank", href="/movie/#{item._id}") 查看
                             td
@@ -29,6 +21,5 @@ block content
                             td
                                 button.btn.btn-primary.del(type="button", data-id="#{item._id}") 删除
         .row.text-right.float-right
-            a.btn.btn-success.mr-2(href="/admin/movie/new") 新增电影
-            a.btn.btn-success(href="/admin/category/new") 新增分类
-    script(src="/js/admin.js")
+            a.btn.btn-success(href="/admin/category/new") 新增
+    script(src="/js/category.js")

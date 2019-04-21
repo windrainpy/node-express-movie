@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            form(method="post", action="/admin/category/save", style="width: 50%")
+
+                //- input#id(type="hidden", name="category[_id]", value="#{category._id}")
+
+                .form-group
+                    lable.col-md-2.control-lable(for="name") 电影分类名
+                    .col-md-10
+                        input#name.form-control(type="text", name="category[name]", value="#{category.name}")
+
+                .form-group
+                    p.col-md-2
+                        input#save.btn.btn-primary(type="submit", value="提交")
+                            
+
