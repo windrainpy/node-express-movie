@@ -3,52 +3,77 @@ extends ../layout
 block content
     .container
         .row
-            form(method="post", action="/admin/movie/new", style="width: 100%")
+            form(method="post", action="/admin/movie/new", style="width: 50%")
+                if movie._id
+                    input#id(type="hidden", name="movie[_id]", value=movie._id)
 
-                input#id(type="hidden", name="movie[_id]", value="#{movie._id}")
+                .form-group
+                    lable.col-md-2.control-lable(for="doubanInput") 同步豆瓣数据
+                    .col-md-10
+                        input#doubanInput.form-control(type="text")
+
+                .form-group
+                    lable.col-md-2.control-lable(for="category") 电影类型
+                    .col-md-10
+                        each item in categories
+                            label.radio-inline
+                                if movie._id
+                                    input(type="radio", name="movie[category]", value=item._id checked=movie.category.toString() === item._id.toString())
+                                    | #{item.name} &emsp;
+                                else 
+                                    input(type="radio", name="movie[category]", value=item._id)
+                                    | #{item.name} &emsp;
+                        //-新增时提供自定义分类选项
+                        if !movie._id
+                            label.radio-inline
+                                input#customCategoryRadio(type="radio")
+                                | 自定义
+                                input#categoryCustom.form-control(type="text", name="movie[categoryName]", value=movie[categoryName] style="width: 170px; display: inline-block;")
+
 
                 .form-group
                     lable.col-md-2.control-lable(for="title") 电影名字
                     .col-md-10
-                        input#title.form-control(type="text", name="movie[title]", value="#{movie.title}")
+                        input#title.form-control(type="text", name="movie[title]", value=movie.title)
                         
                 .form-group
                     lable.col-md-2.control-lable(for="year") 年份
                     .col-md-10
-                        input#year.form-control(type="text", name="movie[year]", value="#{movie.year}")
+                        input#year.form-control(type="text", name="movie[year]", value=movie.year)
                         
                 .form-group
                     lable.col-md-2.control-lable(for="doctory") 导演
                     .col-md-10
-                        input#doctory.form-control(type="text", name="movie[doctory]", value="#{movie.doctory}")
+                        input#doctory.form-control(type="text", name="movie[doctory]", value=movie.doctory)
                         
                 .form-group
                     lable.col-md-2.control-lable(for="country") 国家
                     .col-md-10
-                        input#country.form-control(type="text", name="movie[country]", value="#{movie.country}")
+                        input#country.form-control(type="text", name="movie[country]", value=movie.country)
                         
                 .form-group
                     lable.col-md-2.control-lable(for="poster") 海报
                     .col-md-10
-                        input#poster.form-control(type="text", name="movie[poster]", value="#{movie.poster}")
+                        input#poster.form-control(type="text", name="movie[poster]", value=movie.poster)
                         
                 .form-group
                     lable.col-md-2.control-lable(for="language") 语言
                     .col-md-10
-                        input#language.form-control(type="text", name="movie[language]", value="#{movie.language}")
+                        input#language.form-control(type="text", name="movie[language]", value=movie.language)
                         
                 .form-group
                     lable.col-md-2.control-lable(for="flash") 播放地址
                     .col-md-10
-                        input#flash.form-control(type="text", name="movie[flash]", value="#{movie.flash}")
+                        input#flash.form-control(type="text", name="movie[flash]", value=movie.flash)
                         
                 .form-group
                     lable.col-md-2.control-lable(for="summary") 简介
                     .col-md-10
-                        input#summary.form-control(type="text", name="movie[summary]", value="#{movie.summary}")
+                        input#summary.form-control(type="text", name="movie[summary]", value=movie.summary)
                         
                 .form-group
                     p.col-md-2
                         input#save.btn.btn-primary(type="submit", value="提交")
-                            
+
+    script(src="/js/movie.js")
 

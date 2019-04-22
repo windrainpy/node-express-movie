@@ -1,18 +1,22 @@
 /*!
  * 首页控制器
  */
-var Movie = require('../models/movie')
+var Category = require('../models/category')
 
 /**
  * 首页 列表页
  */
 exports.index = (req, res) => {
-    Movie.fetch((err, movies) => {
-        if(err) console.error(err)
+    Category
+        .find({})
+        .populate('movies')
+        .exec((err, categories) => {
+        
+        if(err) console.log(err)
 
         res.render('index', {
             title: 'Movie Home',
-            movies: movies
+            categories
         })
     })
 }

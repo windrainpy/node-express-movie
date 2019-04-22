@@ -28,7 +28,7 @@ module.exports = (app) => {
     app.post('/user/comment', User.loginRequired, Comment.addComment)
 
     // 后台管理 - 电影
-    app.get('/admin/movie/new', User.loginRequired, User.adminRequired, Movie.new)
+    app.get('/admin/movie/new', User.loginRequired, User.adminRequired, Movie.newPage)
     app.get('/admin/movie/update/:id', User.loginRequired, User.adminRequired, Movie.update)
     app.post('/admin/movie/new', User.loginRequired, User.adminRequired, Movie.save)
     app.delete('/admin/movie/delete', User.loginRequired, User.adminRequired, Movie.delete)

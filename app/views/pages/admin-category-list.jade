@@ -3,23 +3,32 @@ extends ../layout
 block content
     .container
         .row
+            .page-header(style="width: 100%")
+                ul.nav.nav-pills.mb-3.float-left.mt-3.mr-3
+                    li.nav-item(role="presentation")
+                        a.nav-link(href="/admin/movie/list") Movie Management
+                    li.nav-item.ml-2(role="presentation")
+                        a.nav-link(href="/admin/category/list") Category Management
+
+    .container
+        .row
             table.table.table-hover.table-bordered
                 thead
                     tr
                         th 分类名
-                        th 查看
-                        th 更新
-                        th 删除
+                        //- th 查看
+                        //- th 更新
+                        //- th 删除
                 tbody
                     each item in categories
-                        tr(class="item-id-#{item._id}")
+                        tr(class="item-id-#{item._id}", data="#{item}")
                             td #{item.name}
-                            td
-                                a(targe="_blank", href="/movie/#{item._id}") 查看
-                            td
-                                a(targe="_blank", href="/admin/movie/update/#{item._id}") 修改
-                            td
-                                button.btn.btn-primary.del(type="button", data-id="#{item._id}") 删除
+                            //- td
+                            //-     a(targe="_blank", href="/movie/#{item._id}") 查看
+                            //- td
+                            //-     a(targe="_blank", href="/admin/movie/update/#{item._id}") 修改
+                            //- td
+                            //-     button.btn.btn-primary.del(type="button", data-id="#{item._id}") 删除
         .row.text-right.float-right
             a.btn.btn-success(href="/admin/category/new") 新增
     script(src="/js/category.js")

@@ -7,7 +7,11 @@ var Category = require('../models/category')
  * 后台 分类列表
  */
 exports.list = (req, res) => {
-    Category.fetch(function(err, categories) {
+    Category
+        .find({})
+        .populate('movie')
+        .exec(function(err, categories) {
+
         if(err) console.error(err)
 
         res.render('admin-category-list', {

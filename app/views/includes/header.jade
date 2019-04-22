@@ -8,8 +8,6 @@
                         a.nav-link(href="/") Home
                     li.nav-item.ml-2(role="presentation")
                         a.nav-link(href="/admin/movie/list") admin
-                h2.float-left.mt-3.mb-2 #{title} 
-                    small - I love movie
 
                 if user
                     ul.nav.nav-pills.mt-4.float-right
@@ -25,6 +23,11 @@
 
 
 hr
+.container
+    .row
+        h2.float-left.mt-1.mb-4 #{title} 
+            small - I love movie
+
 #signup_modal.modal.fade
     .modal-dialog
         .modal-content

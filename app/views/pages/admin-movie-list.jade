@@ -3,10 +3,20 @@ extends ../layout
 block content
     .container
         .row
+            .page-header(style="width: 100%")
+                ul.nav.nav-pills.mb-3.float-left.mt-3.mr-3
+                    li.nav-item(role="presentation")
+                        a.nav-link(href="/admin/movie/list") Movie Management
+                    li.nav-item.ml-2(role="presentation")
+                        a.nav-link(href="/admin/category/list") Category Management
+
+    .container
+        .row
             table.table.table-hover.table-bordered
                 thead
                     tr
                         th 电影名字
+                        th 类型
                         th 年份
                         th 导演
                         th 国家
@@ -18,6 +28,7 @@ block content
                     each item in movies
                         tr(class="item-id-#{item._id}")
                             td #{item.title}
+                            td #{item.category.name}
                             td #{item.year}
                             td #{item.doctory}
                             td #{item.country}
@@ -29,6 +40,5 @@ block content
                             td
                                 button.btn.btn-primary.del(type="button", data-id="#{item._id}") 删除
         .row.text-right.float-right
-            a.btn.btn-success.mr-2(href="/admin/movie/new") 新增电影
-            a.btn.btn-success(href="/admin/category/new") 新增分类
+            a.btn.btn-success.mr-2(href="/admin/movie/new") 新增
     script(src="/js/admin.js")
