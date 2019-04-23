@@ -17,7 +17,8 @@ module.exports = (app) => {
     app.get('/', Index.index)
 
     // 电影
-    app.get('/movie/:id', Movie.detail)
+    app.get('/movie/detail/:id', Movie.detail)
+    app.get('/movie/search', Movie.search)
 
     // 用户
     app.get('/signup', User.signupPage)

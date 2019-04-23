@@ -175,3 +175,63 @@ exports.delete = (req, res) => {
         res.json({success: 1})
     })
 }
+
+/**
+ * 搜索(带分页)
+ */
+exports.search = (req, res) => {
+    var params = req.query
+    var pageSize = 10
+    var currentPage = parseInt(params.pageNum || 1)
+    var index = pageSize * (currentPage - 1)
+
+    // 按分类搜索
+    if(params.category) {
+        Category
+            .find({_id: params.category})
+            .populate({
+                path: 'movies',
+                select: 'title poster'
+            })
+            .exec((err, categories) => {
+
+            var category = categories[0] || {}
+            var movies = category.movies || []
+            var results = movies.slice(index, index + pageSize)
+
+            res.render('movie-search', {
+                title: 'Movie Search Result',
+                query: {
+                    keyword: '',
+                    categoryName: category.name,
+                    categoryId: category._id,
+                },
+                movies: results,
+                currentPage: currentPage,
+                totalPage: Math.ceil(movies.length / pageSize),
+                totalNum: movies.length,
+            })
+        })
+    }
+    // 按关键字搜索
+    else {
+        Movie
+            .find({title: new RegExp(params.keyword + '.*', 'i')})
+            .exec((err, movies) => {
+
+            var results = movies.slice(index, index + pageSize)
+
+            res.render('movie-search', {
+                title: 'Movie Search Result',
+                query: {
+                    keyword: params.keyword,
+                },
+                movies: results,
+                currentPage: currentPage,
+                totalPage: Math.ceil(movies.length / pageSize),
+                totalNum: movies.length,
+            })
+        })
+    }
+
+}

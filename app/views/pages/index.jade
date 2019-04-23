@@ -4,13 +4,16 @@ block content
     .container
 
         each category in categories
-            h5.h5 #{category.name} （#{category.movies.length}）
+            h5.h5 
+                a(href="/movie/search?category=#{category._id}")
+                    | #{category.name}
+                （#{category.movies.length}）
             hr
             .row.mb-3
                 each item in category.movies
                     .col-md-3
                         .thumbail
-                            a(href="/movie/#{item._id}")
+                            a(href="/movie/detail/#{item._id}")
                                 img(src="#{item.poster}", alt="#{item.title}" width="200" height="280")
                             .caption
                                 h6.mt-2.mb-3 #{item.title}

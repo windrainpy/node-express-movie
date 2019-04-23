@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+    .container
+        hr
+        h4.h4 
+            if query.keyword
+                span 关键字： #{query.keyword}
+            if query.categoryName
+                span 分类： #{query.categoryName}
+            （#{totalNum}）
+        br
+        .row
+            each item in movies
+                .col-md-3
+                    .thumbail
+                        a(href="/movie/detail/#{item._id}")
+                            img(src="#{item.poster}", alt="#{item.title}" width="200" height="280")
+                        .caption
+                            h6.mt-2.mb-3 #{item.title}
+                            p
+                                a.btn.btn-dark(href="/movie/detail/#{item._id}") 观看预告片
+
+        hr
+        nav
+            ul.pagination
+                - for(var i=1; i<=totalPage; i++)
+                    - if (i === currentPage)
+                        li.page-item.active
+                            a.page-link(href='/movie/search?pageNum=#{i}&keyword=#{query.keyword}&category=#{query.categoryId}', data-pagenum="#{i}") #{i}
+                    - else
+                        li.page-item
+                            a.page-link(href='/movie/search?pageNum=#{i}&keyword=#{query.keyword}&category=#{query.categoryId}', data-pagenum="#{i}") #{i}
+    
+
+

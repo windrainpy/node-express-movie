@@ -4,7 +4,7 @@ block content
     .container
         .row
             .col-md-7
-                embed.mb-3(src="#{movie.flash}", allowFullScreen="true", quality="high", width="600", height="420", align="middle", type="application/x-shockwave-flash")
+                embed.mb-3(src=movie.flash, allowFullScreen="true", quality="high", width="600", height="420", align="middle", type="application/x-shockwave-flash")
 
                 hr
                 //- 评论区
@@ -30,12 +30,12 @@ block content
                         hr
 
                 form#comment_form.mb-5.mt-3(action="/user/comment", method="post")
-                    input(type="hidden", name="comment[movie]", value="#{movie._id}")
+                    input(type="hidden", name="comment[movie]", value=movie._id)
                     //- 用js插入以下隐藏文本域
                     //- input(type="hidden", name="comment[toId]", value="123")
                     //- input(type="hidden", name="comment[commentId]", value="123")
                     if user
-                        input(type="hidden", name="comment[from]", value="#{user._id}")
+                        input(type="hidden", name="comment[from]", value=user._id)
 
                     .form-group
                         label(for="commentInput") 评论内容
