@@ -5,7 +5,7 @@ var bodyParser = require('body-parser')
 var session = require('express-session')
 var cookieParser = require('cookie-parser')
 var mongoStore = require('connect-mongo')(session)
-var logger = require('morgan')
+// var logger = require('morgan')
 
 var port = process.env.PORT || 9000
 var mongodbUrl = 'mongodb://localhost:27017/movie'

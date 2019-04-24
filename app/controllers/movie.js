@@ -91,7 +91,17 @@ exports.save = (req, res) => {
     var params = req.body.movie
     var id = params._id
     var categoryId= params.category
+    var oldCategory = params.oldCategory
     var categoryName= params.categoryName
+    var file = req.file
+
+    //如果有上传本地海报，则文件存放在这个file变量里，具体实现看 Movie.uploadFile
+    console.log('path: ', req.file)
+
+    // 上传本地海报
+    if(req.file) {
+        params.poster = `/upload/${req.newFileName}`
+    }
 
     // 修改
     if (id) {
@@ -100,22 +110,32 @@ exports.save = (req, res) => {
 
             var newMovie = _.extend(movie, params)
 
-            newMovie.save((err, movie) => {
+            newMovie.save((err, movie) => { //保存电影
                 if(err) console.log(err)
 
-                Category.findById(categoryId, (err, category) => {
+                Category.findById(categoryId, (err, category) => { //把电影保存到分类下面
                     if (err) console.log(err)
 
                     var movies = category.movies
 
-                    if(!movies.includes(movie._id)) {
-                        category.movies.push(movie._id)
+                    movies.push(movie._id)
 
-                        category.save((err, category) => {
-                            if (err) console.log(err)
-                        })
-                    }
-                    res.redirect(`/admin/movie/list`)
+                    category.save((err, category) => {
+                        if (err) console.log(err)
+
+                        if(oldCategory !== categoryId) { //把这部电影从之前的分类中剔除
+                            Category.findById(oldCategory, (err, category) => {
+                                var movies = category.movies
+                                var index = movies.indexOf(oldCategory)
+                                movies.splice(index, 1)
+                                category.save((err, category) => {
+                                    res.redirect(`/admin/movie/list`)
+                                })
+                            })
+                        } else {
+                            res.redirect(`/admin/movie/list`)
+                        }
+                    })
                 })
             })
         })

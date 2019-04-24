@@ -1,3 +1,4 @@
+var multer = require('multer')
 var Index = require('../app/controllers/index')
 var Movie = require('../app/controllers/movie')
 var User = require('../app/controllers/user')
@@ -5,7 +6,6 @@ var Comment = require('../app/controllers/comment')
 var Category = require('../app/controllers/category')
 
 module.exports = (app) => {
-
     // 预处理：把存user到locals的逻辑移出到所有请求里
     app.use((req, res, next) => {
         var user = req.session.user
@@ -13,8 +13,20 @@ module.exports = (app) => {
         next()
     })
 
+    var storage = multer.diskStorage({
+        destination: function(req, file, cb) { // 保存路径
+            cb(null, 'public/upload')
+        },
+        filename: function(req, file, cb) { // 保存的文件名
+            var newFileName = Date.now() + file.originalname
+            req.newFileName = newFileName
+            cb(null, newFileName)
+        }
+    })
+    var uploadHandler = multer({storage: storage})
+
     // 首页
-    app.get('/', Index.index)
+    app.get('/', Index.index) 
 
     // 电影
     app.get('/movie/detail/:id', Movie.detail)
@@ -31,7 +43,7 @@ module.exports = (app) => {
     // 后台管理 - 电影
     app.get('/admin/movie/new', User.loginRequired, User.adminRequired, Movie.newPage)
     app.get('/admin/movie/update/:id', User.loginRequired, User.adminRequired, Movie.update)
-    app.post('/admin/movie/new', User.loginRequired, User.adminRequired, Movie.save)
+    app.post('/admin/movie/new', User.loginRequired, User.adminRequired, uploadHandler.single('uploadPoster'), Movie.save)
     app.delete('/admin/movie/delete', User.loginRequired, User.adminRequired, Movie.delete)
     app.get('/admin/movie/list', User.loginRequired, User.adminRequired, Movie.list)
 

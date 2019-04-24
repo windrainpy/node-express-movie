@@ -3,9 +3,10 @@ extends ../layout
 block content
     .container
         .row
-            form(method="post", action="/admin/movie/new", style="width: 50%")
+            form(method="post", enctype="multipart/form-data", action="/admin/movie/new", style="width: 50%")
                 if movie._id
                     input#id(type="hidden", name="movie[_id]", value=movie._id)
+                    input#id(type="hidden", name="movie[oldCategory]", value=movie.category)
 
                 .form-group
                     lable.col-md-2.control-lable(for="doubanInput") 同步豆瓣数据
@@ -52,9 +53,14 @@ block content
                         input#country.form-control(type="text", name="movie[country]", value=movie.country)
                         
                 .form-group
-                    lable.col-md-2.control-lable(for="poster") 海报
+                    lable.col-md-2.control-lable(for="poster") 海报（网络地址）
                     .col-md-10
                         input#poster.form-control(type="text", name="movie[poster]", value=movie.poster)
+                        
+                .form-group
+                    lable.col-md-2.control-lable(for="uploadPoster") 海报（本地上传，覆盖网络地址）
+                    .col-md-10
+                        input#uploadPoster.form-control(type="file", name="uploadPoster")
                         
                 .form-group
                     lable.col-md-2.control-lable(for="language") 语言
