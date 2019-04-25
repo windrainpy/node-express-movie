@@ -8,6 +8,7 @@ var UserSchema = new mongoose.Schema({
         unique: true
     },
     password: String,
+    // 这种方式扩展性比单纯的定义字符串的方式，扩展性更好。日后要拓展其他角色类型只需要添加数字
     // 0: 普通用户
     // 1：邮件验证通过的用户
     // 2：专业的用户

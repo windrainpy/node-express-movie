@@ -40,7 +40,6 @@ exports.save = (req, res) => {
     var _category = req.body.category
 
     var newCategory = new Category(_category)
-    console.log(11111, newCategory)
 
     newCategory.save((err, data) => {
         if(err) console.log(err)
