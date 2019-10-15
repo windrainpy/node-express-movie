@@ -1,4 +1,4 @@
-# 运行项目
+#  运行项目
 1. cnpm install 
     安装nodejs的依赖包
 
